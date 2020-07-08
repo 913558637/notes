@@ -1,0 +1,97 @@
+类型表  tool.oschina.net/commons
+
+一.文件模块
+  let fs=require('fs')
+ 1. 读取文件
+  fs.readFile(url,'utf8'function(error,data){
+  获取的数据是二进制，需要toString转化,也可以添加参数utf8，
+  data.toString()
+})
+
+ 1. 读取目录
+  fs.readdir(url,function(error,data){
+  
+})
+
+ 2.写文件
+ fs.writeFile(url,要写入的内容,function(error){
+
+})
+
+二.服务模块
+ let  http=require('http')
+
+ 1.创建服务
+  let server=http.createServer()
+ 
+ 2.接收请求
+  server.on('request',function(request,response){
+   require.url  请求路劲
+  响应请求
+
+  response.write(内容)  基本不用
+
+  设置响应内容类型
+  response.setHeader('Content-Type':'text/plain;charset=utf-8')
+
+  从定向跳转页面
+  response.statusCode=302
+  response.setHeader('Location','/')
+  结束响应并发送响应数据
+  response.end(内容)
+})
+
+ 3.启动服务器
+  server.listen(3000,function(){
+
+})
+
+
+三 express框架
+
+ 1.引入 const express=require('express')
+
+ 2.创建实例 const app=express();
+
+ 3.响应并结束响应 
+  app.get('/',(req,res)=>{
+    res.send(data)
+  }) 
+ 4.公开指定目录 app.use('/public/',express.static('./public/')) 当省略第一个参数的时候，可以通过省略/public的方式来直接访问/public/目录下的资源
+
+ 5.获取get的数据
+ app.get('/',(req,res)=>{
+    req.query
+  }) 
+
+ 6.重定向跳转页面
+ app.get('/',(req,res)=>{
+    res.redirect（'/'）
+  }) 
+ 
+  7.post获取数据
+  在express的资源的中间件里查看配置
+  需要下载第三方插件body-parser
+  var bodyParser = require('body-parser')
+  app.use(bodyParser.urlencoded({ extended: false }))
+  app.use(bodyParser.json())
+  app.post('/',(req,res)=>{
+    res.body
+  })
+
+  8.提取路由
+
+  新建一个js文件  //router.js
+  var express=require('exprexx')
+
+ var router=express.Router()
+  router.get('/',()=>{})
+
+  最后在入口文件引入这个文件
+  let router=require('./router')
+  app.use(router)
+四.修改完代码自动重启服务器
+
+ 1.npm install nodemon --save
+
+ 2.在命令行使用  nodemon app.js 

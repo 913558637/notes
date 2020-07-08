@@ -1,0 +1,225 @@
+//ajax中post方法需要设的代码
+ajax.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+  //scroll兼容性封装写法
+    function scroll(){
+      return  {
+            "top":window.pageYOffset||document.body.scrollTop||document.documentElement.scrollTop,
+            "left":window.pageXOffset|document.body.scrollLeft||document.documentElement.scrollLeft
+        }
+    }
+//client兼容性封装写法
+ function client(){
+ return{
+            "width":window.innerWidth||document.documentElement.clientWidth||document.body.clientWidth,
+            "height":window.innerHeight||document.documentElement.clientHeight||document.body.clientHeight
+        }
+    }
+ //获取屏幕可视区域的宽高封装
+    function client(){
+        if(window.innerHeight !== undefined){
+            return {
+                "width": window.innerWidth,
+                "height": window.innerHeight
+            }
+        }else if(document.compatMode === "CSS1Compat"){
+            return {
+                "width": document.documentElement.clientWidth,
+                "height": document.documentElement.clientHeight
+            }
+        }else{
+            return {
+                "width": document.body.clientWidth,
+                "height": document.body.clientHeight
+            }
+        }
+    }
+//阻止冒泡
+event = event || window.event;
+if(event && event.stopPropagation){
+            event.stopPropagation();
+  }else{
+            event.cancelBubble = true;
+  }
+//点击获取目标
+event = event || window.event;
+var a = event.target?event.target:event.srcElement;
+//或
+var a=event.target||event.srcElement;
+//trim封装
+       function trim(str){
+            var aaa = str.replace(/(^\s+)|(\s+$)/g,"");
+            return aaa;
+        }
+ //禁止文本选中（选中后取消）
+ window.getSelection ? window.getSelection().removeAllRanges() : document.selection.empty();
+//Ajax中get和post方法封装
+function ajax_tool(url,data,method,success) {
+	var ajax = new XMLHttpRequest();
+	if (method=='get') {
+		if (data) {
+			url+='?';
+			url+=data;
+		}else{
+		}
+		ajax.open(method,url);
+		ajax.send();
+	}else{
+		ajax.open(method,url);
+		ajax.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+		if (data) {
+			ajax.send(data);
+		}else{
+			ajax.send();
+		}
+	}
+	ajax.onreadystatechange = function () {
+		if (ajax.readyState==4&&ajax.status==200) {
+			success(ajax.responseText);
+		}
+	}
+
+}
+//移动web点击事件封装
+function fox_tap(element,callBack) {
+	var startTime = 0;
+	var isMove =false;
+	var maxTime = 250;
+	element.addEventListener('touchstart',function (e) {
+		startTime = Date.now();
+		isMove = false;
+	})
+	element.addEventListener('touchmove',function (e) {
+		isMove = true;
+	})
+	element.addEventListener('touchend',function (event) {
+		if (isMove == true) {
+			return;
+		}
+		if ((Date.now()-startTime)>maxTime) {
+			return;
+		}
+		callBack(e);
+	})
+}
+//浏览器返回指定地址
+(function() {
+        history.pushState({}, '', '');
+        window.onpopstate = function () {
+            location.href ='url';
+
+        };
+    })();
+//手机适配
+!function(n){
+				
+          var e=n.document,
+
+	  t=e.documentElement,
+					
+          i=640,
+					
+          d=i/100,o="orientationchange"in n?"orientationchange":"resize",
+
+	  a=function(){var n=t.clientWidth||320;n>640&&(n=640),
+					
+          t.style.fontSize=n/d+"px"
+
+         };
+				
+          e.addEventListener&&(n.addEventListener(o,a,!1),e.addEventListener("DOMContentLoaded",a,!1))
+		
+}(window);
+
+//时间戳转换
+
+Vue.filter('xtime', function (value) {
+  let time = new Date(value*1000);
+  let y = time.getFullYear();//年
+  let m = (time.getMonth()+1<10)?'0'+(time.getMonth()+1):time.getMonth()+1;//月
+  let d = time.getDate()<10?'0'+time.getDate():time.getDate();//日
+  let h = time.getHours()<10?'0'+time.getHours():time.getHours();//时
+  let f = time.getMinutes()<10?'0'+time.getMinutes():time.getMinutes();//分
+  let s = time.getSeconds()<10?'0'+time.getSeconds():time.getSeconds();//秒
+  // value = `${y}-${m}-${d} ${h}:${f}:${s}`
+  value = `${y}-${m}-${d}`
+  return value;
+});
+
+//上传图片
+uploadChange(event){
+          let _this = this;
+          let img=event.target.files[0];
+          //本地显示
+          let reader = new FileReader();
+          reader.readAsDataURL(img) ;// 这里是最关键的一步，转换就在这里
+          reader.onloadend = function () {
+            _this.imgDataUrl = this.result
+          };
+          //上传图片
+          let form = new FormData();
+          form.append('image',img,img.name);
+          this.axios.post('public/index.php/store/index/imageUpload',form).then(response => {
+            console.log(response.data);
+          }).catch(error => {
+            alert('上传图片出错！');
+          })
+        }
+
+//判读是否是微信浏览器
+let ua = navigator.userAgent.toLowerCase();
+          let isWeixin = ua.indexOf('micromessenger') != -1;
+
+          if (!isWeixin) {
+            alert('支付宝');
+          } else{
+            alert('微信')
+          }
+
+//支付宝支付
+const odiv = document.createElement('odiv');// 创建div
+                    odiv.innerHTML =res.data.form; // 将返回的form 放入div
+                    document.body.appendChild(odiv)；//把div加入页面
+                    document.forms[0].submit();//提交表单
+//上传视频本地预览
+  URL.createObjectURL(event.target.files[0]);
+
+//拖拽事件
+
+ ondragstart 拖拽开始 
+
+ ondragend  拖拽结束
+
+ ondragover 进入目标 e.preventDefault();需要阻止默认事件
+
+ ondrop 拖拽释放
+
+//数组拖动排序
+
+function(arr,index,tindex){
+  //如果当前元素在拖动目标位置的下方，先将当前元素从数组拿出，数组长度-1，我们直接给数组拖动目标位置的地方新增一个和当前元素值一样的元素，
+  //我们再把数组之前的那个拖动的元素删除掉，所以要len+1
+  if(index>tindex){
+    arr.splice(tindex,0,arr[index]);
+    arr.splice(index+1,1)
+  }
+  else{
+  //如果当前元素在拖动目标位置的上方，先将当前元素从数组拿出，数组长度-1，我们直接给数组拖动目标位置+1的地方新增一个和当前元素值一样的元素，
+  //这时，数组len不变，我们再把数组之前的那个拖动的元素删除掉，下标还是index
+    arr.splice(tindex+1,0,arr[index]);
+    arr.splice(index,1)
+  }
+}
+
+index是当前元素下标，tindex是拖动到的位置下标。
+
+//判断上传图片的宽高
+        let reader = new FileReader
+         reader.onload = function(evt) {
+          let image = new Image()
+           image.onload = function() {
+             this.width
+	     this,height
+           }
+           image.src = evt.target.result
+         }
+        reader.readAsDataURL(file)

@@ -1,0 +1,144 @@
+1.设置/切换个人信息
+  
+ git config --global user.name "Your Name"
+ git config --global user.email "email@example.com"
+
+   查看个人账户 
+
+   git config user.name 
+
+   git config user.email
+
+2.创建版本库即初始化
+
+ git init
+
+3.把文件添加到仓库
+
+ git add 文件
+
+4.提交到仓库
+
+ git commit -m "提交说明"
+
+5.查看仓库当前的状态
+
+ git status
+
+6.查看之前修改过的内内容
+
+ git didd 文件
+
+7.查看提交日志
+
+ git log
+
+8.回退版本
+
+ git reset --hard HEAD^(用HEAD表示当前版本,上一个版本就是HEAD^，上上一个版本就是HEAD^^，当然往上100个版本写100个^比较容易数不过来，所以写成HEAD~100。)
+
+9.记录每一次提交的命令
+
+ git reflog
+
+10.撤回工作区的修改（也可以恢复删除的文件）
+
+ git checkout -- 文件 （--很重要，没有--，就变成了“切换到另一个分支”的命令）
+
+11.从暂存区撤回到工作区
+ 
+ git reset HEAD 文件
+
+12.删除版本库的文件
+
+ git rm 文件 先删除文件
+ 
+ git commit -m "说明"  后提交就可以实现版本库的文件删除
+
+13.创建SSH Key
+
+ ssh-keygen -t rsa -C youremail
+
+14.关联远程仓库
+ git remote get-url origin （查看当前关联的远程仓库地址）
+  
+ git remote rm origin（删除当前仓库关联的地址）
+
+ git remote add origin git@github.com:michaelliao/learngit.git（第一次关联远程仓库地址）
+
+ git remote set-url origin git@10.1.22.30:LauncherGroup/Launcher.git (重新设置关联远程仓库地址）
+
+15.提交到远程仓库
+
+ git push -u origin master（master是提交到远程仓库的分支，第一次提交使用 -u，以后先git pull --rebase 再git push ）
+
+git pull --rebase           git pull 是拉代码， --rebase 参数是远程覆盖本地  
+
+16.从远程仓库复制项目
+
+ git clone git@github.com:michaelliao/learngit.git（远程仓库地址）
+
+17.创建分支
+
+ git checkout -b 分支名称 （-b参数表示创建并切换）
+
+18.查看当前分支
+
+ git branch
+
+19.合并分支
+
+ git merge --no-ff 分支名  (比如把dev分支合并到master，那么需要切换到master分支 然后执行 git merge dev)
+ 
+20.删除分支
+
+ git branch -d 分支名 （大写D可以强行删除没合并的分支）
+git push origin --delete 分支名 删除远程分支
+
+21.合并冲突解决
+
+ 当Git无法自动合并分支时，就必须首先解决冲突。解决冲突后，再提交，合并完成。
+
+ 解决冲突就是把Git合并失败的文件手动编辑为我们希望的内容，再提交。
+
+22.合并分支保存保存分支的信息
+
+git merge --no-ff -m "merge with no-ff" 分支名 （--no-ff参数，表示禁用Fast forward ，-m 表示重新提交一份给分支）
+
+23.把做到一半没法提交的工作存储起来；
+
+ git stash
+
+24.恢复没完成的工作
+
+ git stash pop
+
+25.查看远程仓库的信息
+
+ git remote -v
+
+26.创建标签，可以说是版本号
+
+ git tag <name>
+
+27.查看所有标签
+ 
+ git tag
+
+28.给历史版本大标签
+
+ git tag v0.9 commit id
+
+29.删除标签
+
+ git tag -d 标签名
+
+30.把标签推送到远程
+
+ git push oringin 标签名 
+ 
+ git push origin --tags  （一次性推送全部尚未推送到远程的本地标签：）
+
+31.git rebase --abort  退出解决冲突
+
+32.git rebase --continue  解决完冲突退出

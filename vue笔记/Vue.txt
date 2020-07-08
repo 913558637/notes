@@ -1,0 +1,259 @@
+一：命令行工具；
+1.全局安装 vue-cli：npm install -g vue-cil
+
+2.创建一个基于webpack模板的新项目：vue init webpack myProject(项目文件夹名称)
+
+二：vue常用功能
+
+1.v-bint:title 鼠标放上去显示绑定的显示
+
+2.v-html 如果有标签会把标签加载到页面，没有标签就和v-text显示的一样
+
+3.v-text 如果有标签会把标签转换成字符串显示出来，没有标签就和v-html显示的一样
+
+4.v-for=（val,index）in number/obj :key=""(建议给上)（index可以写也可以不写，不写的时候去掉括号）遍历 
+
+5.v-show=(true/false) true为显示false为隐藏
+
+6.v-model 双向绑定，只能用在input
+
+7.v-bind：class 可以用三元表达试，可以直接用true/false,也可以用遍历方式{}[]
+
+8.methods属性：methods：{fn()}
+
+9.v-on:事件名=“表达式||函数名”，函数名如果没有参数，可以省略（），直接写函数名
+
+10.component属性：component：{组件名:引入.vue文件的名字}
+
+11.全局组件：在main.js引入一次；通过Vue.component('组件名','组件对象')，就可以在全局使用
+
+12.父组件传值给子组件:在父组件的子组件里声明一个name eq：<footer 名称=“值”|| v-bind:名称=‘变量’></footer>； 
+
+   在子组件使用props属性接收：props:['在父组件声明的name'，"",""]可以多个
+
+13.父组件接收子组件的值：创建一个连接器即一个js文件，在里面构建一个实例然后导出（export default 实例），然后在
+
+   子和父分别导入这个js文件.在父组件使用 js的名字.$on(name,fn（data）)接收,在子组件使用 js的名字.$emit(name,要传的值)
+
+14.filters过滤器属性： filters:{fn(data){return}};data=>要过滤的值
+
+15.全局过滤器：在main.js,通过Vue.filter(name,fn(data){return})
+
+16.created属性：created(){}数据已完成初始化，但DOM还未生成
+
+17.mounted属性：mounted（）{}据装载在DOM上后，各种数据已经就位。将数据渲染到DOM，DOM已经生成
+
+18.获取DOM，在指定元素上添加 ref=“名称”，在获取的地方加入this.$refs.名称。如果ref放在原生DOM元素上，获取的数据就是原生
+
+   DOM对象，可以直接操作，如过ref放在组件对象上，获取的是组件对象，可以通过this.$refs.名称.$el获取
+
+19.router：this.$router.push(url=>url可以是绝对路劲，也可以是对象：name：“)；
+
+           this.$router.go(-1)后退，this.$router.go(1)前进；
+
+           <router-link :to="{name:''}"></router-link>||<router-link to="url"></router-link>
+
+20.重定向和404：重定向{path:'/',redirect:{name:''}}；404{path:'*',component:组件}
+
+21.获取router参数：this.$route.params.id||this.$route.query.id
+
+21.axios：安装，npm i axios;在main.js引入 import Axios from 'axios' ，然后给Vue的原型挂载一个属性：Vue.prototype.$axios=Axios;
+
+   通用url：Axios.dafaults.baseUrl=""
+
+22.get请求：this.$axios.get(url,params:{}).then(res=>{}).catch(err=>{})
+
+23.post请求：
+
+var params = new URLSearchParams();
+
+params.append('eg',1);
+
+this.$axios.post(url,params).then(res=>{}).catch(err=>{})
+
+24.
+
+25.计算属性watch和computed：watch是监视data里面的数值（单个或深度监视）变化；computed监视data的数值并可以在页面里显示，需要return
+
+26.router-link-active（即当前router-link样式设置）设置：需要在main.js中的路由构造函数设置linkActiveClass属性；
+
+27.webpack.prod.conf.js 对应线上打包  webpack.dev.conf.js 对应开发 axios.defaults.baseURL = process.env.API_ROOT;（process全局）
+
+28.this.$root.数据: 获取根实例data的数据，每个组件都可以访问得到
+
+
+
+三：vue打包配置
+
+1.配置文件：webpack.config.js
+
+2.提取css：进入webpack文档找到ExcractTextWebpackPlugin按步骤操作
+
+3.hash(每次打包的标识):js:js/[name].[chunhash:6].js;  css:css/[name].[contenthash:6].css;图片字体：img/[name].[ext](说明：目录/名字.版本号:限制版本号长度)
+
+4.提取第三方包：进入webpack文档找到CommonsChunKPlugin按步骤操作;在配置文件中设置多一个入口，是一个数组
+
+5.设置资源路径的请求地址：在output里添加pulicPath:'/',
+
+6.分块路由懒加载：查看router文档懒加载部分，按步骤操作
+
+四：样式库移动端适配插件
+
+1.安装 npm install px2rem-loader  lib-flexible --save   
+
+2.在main引入：import 'lib-flexible/flexible.js' 
+
+3.在build下的 utils.js中，找到generateLoaders 方法，添加以下代码
+
+const px2remLoader = {  
+    loader: 'px2rem-loader',  
+    options: {  
+    remUnit: 64 //尺寸，一般是10倍
+    }  
+} 
+
+function generateLoaders (loader, loaderOptions) {  
+    const loaders = [cssLoader, px2remLoader]  //这里加上 px2remLoader
+    if (loader) {  
+        loaders.push({  
+        loader: loader + '-loader',  
+        options: Object.assign({}, loaderOptions, {  
+        sourceMap: options.sourceMap  
+        })  
+    })  
+}
+五：vux配置
+
+1.npm install vux --save
+
+2.npm install vux-loader --save-dev
+
+3.npm install less less-loader --save-dev //用来less编译
+
+4.npm install yaml-loader --save-dev //以正确的语言文件读取、没装也没报错，安不安装看心情
+
+5.在build/webpack.base.conf.js中配置
+
+const vuxLoader = require("vux-loader");
+
+const webpackConfig = originalConfig;  //将原来的module.exports赋值给变量webpackConfig即将module.exports换成const webpackConfig
+
+module.exports = vuxLoader.merge(webpackConfig,{plugins:['vux-ui']});//放在最后面
+
+六：axios跨域问题/反向代理
+	反向代理（Reverse Proxy）方式是指以代理服务器来接受internet上的连接请求，
+	然后将请求转发给内部网络上的服务器，并将从服务器上得到的结果返回给internet上请求连接的客户端，
+	此时代理服务器对外就表现为一个反向代理服务器。
+
+1.config/index.js里面的proxyTable添加 
+
+      '/api': { 
+        target: 'http://signup.gzlantern.cn/',//服务器地址 
+        changeOrigin: true,
+        pathRewrite: { 
+          '^/api':''
+        }
+      }
+
+2.config/dev.env.js（开发环境）里面添加  API_ROOT:'"/api/"' 
+3.prod.env.js（生产环境）里面添加      API_ROOT: '"服务器地址"'
+4.main.js里面配置axios默认路径    axios.defaults.baseURL = process.env.API_ROOT;
+
+七：拦截器初始化
+// http request 请求拦截器，有token值则配置上token值
+axios.interceptors.request.use(
+    config => {
+        if (token) {  // 每次发送请求之前判断是否存在token，如果存在，则统一在http请求的header都加上token，不用每次请求都手动添加了
+            config.headers.Authorization = token;
+        }
+        return config;
+    },
+    err => {
+        return Promise.reject(err);//返回接口返回的错误信息
+    });
+ 
+// http response 服务器响应拦截器，这里拦截401错误，并重新跳入登页重新获取token
+axios.interceptors.response.use(
+    response => {
+        return response;
+    },
+    error => {
+        if (error.response) {
+            switch (error.response.status) {
+                case 401:
+                    // 这里写清除token的代码
+                    router.replace({
+                        path: 'login',
+                        query: {redirect: router.currentRoute.fullPath}//登录成功后跳入浏览的当前页面
+                    })
+            }
+        }
+        return Promise.reject(error.response.data) //返回接口返回的错误信息
+    });
+
+
+//路由拦截
+router.beforeEach((to, from, next) => {
+  //to.meta.noCache 拦截所以路由，检测用户信息是否存在，如不存在跳转至登录页，负责放行
+  let login=window.sessionStorage.getItem('ascend');
+  if (to.meta.noCache) {
+    if (login) {
+      next();
+    }else {
+      alert('请重新登录');
+      next({name:'login',replace: true})
+    }
+  }else {
+    next();
+  }
+});
+
+
+
+//vue-cli3基础配置
+
+ module.exports={
+    baseUrl:'./',                       //修正打包后文件路径错误
+    productionSourceMap: false,         //打包把map文件去除
+    devServer:{                        
+        proxy:'http://demo.lanbox.pro/', //反向代理
+        port: 8085, // 端口号
+        host: 'localhost',
+        https: false, // https:{type:Boolean}
+        open: false, //配置自动启动浏览器
+    }
+};
+
+//双向数据绑定原理
+
+采用数据劫持结合发布者-订阅者模式的方式，
+通过Object.defineProerty()劫持各个属性的getter和setter，
+在数据变化时发布消息给订阅者，触发相应的监听回调。
+
+//从0到1构建vue项目
+
+1.使用vue-cli脚手架构建一个项目
+2.下载重要插件，比如axios
+3.封装axios，统一api调用风格，
+4.配置开发，正式api路径，配置反向代理，解决跨域问题
+5.配置less或sass
+6.git忽略文件配置
+
+//v-model的原理
+
+v-model只是一个语法唐，实现还是靠vi-bind绑定和触发input事件来传递数据
+
+//keep-alive的生命周期
+1.activated： 页面第一次进入的时候，钩子触发的顺序是created->mounted->activated
+2.deactivated: 页面退出的时候会触发deactivated，当再次前进或者后退的时候只触发activated
+
+//重置vue的data数据
+
+Object.assign(this.$data, this.$options.data())
+this.$data //当前data数据
+this.$option.data() //获取data初始化时的状态
+
+//vue渲染模板保留模板HTML注释
+<template comments>
+  ...
+</template>

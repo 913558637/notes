@@ -1,0 +1,32 @@
+1.创建文件
+
+ 直接在app.json里直接写路劲保存就会自动生成文件
+
+2.条件判断 wx:if="{{}}"
+
+3.绑定属性data-aid="{{aid}}"
+
+4.循环数据 wx:for="{{data}}" key: {{index}}     data:{{item}}  修改别名  wx:for-item="list" wx:for-index="key"
+
+5.点击 bindtap="run"
+
+6.修改数据 this.setData({})
+
+7.方法传值 通过自定义属性传值，通过事件对象获取
+
+8.冒泡: bindtap  阻止冒泡: catchtap
+
+9.js跳转 wx.navigateTo({url: '../logs/logs?id=11'}) 获取 onLoad: function (options){options.id}
+
+10.父子组件传值 <component title="{{}}"><component/>
+
+11.父组件调用子组件的方法/数据
+ 
+ var header=this.selectComponent(子组件id) header.方法/数据
+
+12.子组件调用父组件方法
+
+ <component-tag-name bindmyevent="onMyEvent" />
+
+ this.triggerEvent('myevent', data)
+

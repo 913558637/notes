@@ -1,0 +1,105 @@
+1.安装npm install -g create-react-app
+
+2.创建项目 create-react-app demo
+
+3.定义数据
+
+ constructor(){
+      super()
+     this.data={}
+  }
+4.绑定数据使用{}
+
+5.数组循环使用map（）函数、
+
+6.事件获取实例的数据需要改变this指向
+
+ 第一种 run(){alert(this.data) }  <button onClick={this.run.bind(this)}></button>
+
+ 第二种 
+	constructor(){
+      		super()
+     		this.data={}；
+                this.run=this.run.bind(this)
+  	}   
+	run(){alert(this.data) }  <button onClick={this.run}></button>
+
+ 第三种 使用箭头函数 箭头函数本身不绑定this  run=()=>{alert(this.data)}
+
+7.方法传值
+
+ <button onClick={this.run.bind(this,data)}></button>
+
+8.改变数据要用this.setState(),否则视图不更新
+
+9.获取dom 
+
+ 第一种通过事件对象获取 e.target
+
+ 第二种通过ref获取 this.refs
+
+10.键盘事件
+
+ onKeyUp={}
+
+11.双向数据绑定 需要绑定监听事件
+	change=(e)=>{
+    		this.setState({
+        	val:e.target.value
+    	});
+
+  	};
+
+ 	<input type="text" value={this.state.val} onChange={this.change}/>
+
+12.父子组件传值
+
+  父传子
+
+  <Home msg='data'></Home> 子组件即home组件使用this.props.msg 就可以获取父组件传过来的值 
+
+   defaultProps可以设置默认值 Home.defaultProps{msg:0}  
+
+   propTypes 可以设置父组件传过来的类型  import PropTypes from 'prop-types'; 类.propTypes = {msg: PropTypes.string};
+
+  子传父
+
+  <Home ref="home"></Home>  通过this.refs.home就可以获取子组件的数据和方法 
+ 
+13.生命周期
+
+ componentWillUnmount() {// 组件即将挂载
+       
+    }
+ componentDidMount(){// 组件挂载完成
+      
+    }; 
+componentWillUnmount(){//组件销毁前执行}
+
+14.react-router
+
+ web一般只需要安装react-router-dom就可以了 npm install react-router-dom --save
+
+15.动态路由
+
+ 获取动态路由 this.props.match.params.id
+
+  get传值 to="/home?id=12"
+
+ 获取get传值 this.props.location.search 但是这个获取的是?id=12;所以需要进一步处理 
+
+ 安装node-url： npm install url --save 也可以直接封装        使用 url.parse(this.props.location.search,true).query
+
+16.图片渲染问题 如果是循环渲染那么不用处理，不是的话最好用三元运算判断一下
+
+17.路由js跳转
+ 
+   引入 Redirect
+
+   if (true) {
+      return <Redirect to="/" />;
+    }
+
+18.路由传值
+
+ 看官网的 Router Config

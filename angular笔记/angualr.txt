@@ -1,0 +1,263 @@
+1.安装angular-cli
+ 
+ npm install -g @angular/cli
+
+
+
+
+2.创建项目
+
+ ng new '项目名称'
+
+3.启动项目
+
+ ng serve --open
+
+4.创建
+
+ng g class my-new-class              // 新建 class
+
+ng g component my-new-component      // 新建组件
+
+ng g directive my-new-directive      // 新建指令
+
+ng g enum my-new-enum                // 新建枚举
+
+ng g module my-new-module            // 新建模块
+
+ng g pipe my-new-pipe                // 新建管道
+
+ng g service my-new-service          // 新建服务
+
+
+
+
+5.绑定属性
+
+ []=''
+
+7.循环
+
+ *ngFor="let list of arry;let key=index"
+
+8.if条件判断
+
+ *ngIf
+
+9.switch判断
+
+ [ngSwitch]=''
+ *ngSwitchCase=''
+
+10.事件
+
+ (click)=""  //点击事件
+ (keydwon)=""  //表单按键事件
+
+11.双向数据绑定
+
+ 1.在app.module 引入表单模块  import { FormsModule } from '@angular/forms';
+
+ 2.在imports 声明
+ 
+ 3.([ngModel])=""
+
+12.服务 service //相当于vuex
+
+ 1.ng g service my-new-service          // 新建服务
+
+
+
+ 2.在app.module引入后在providers里面声明
+
+ 3.要用的组件还需在引入一次
+ 
+ 4.在组件引入后在构造函数里面初始化
+
+    constructor(public 变量:引入的服务名){this.变量}
+
+ 5.服务是一个类也可以用new来初始化(不推荐)
+
+ 
+13.生命周期
+
+ ngOnInit(){}//没有ng指令的dom生成
+
+ ngAfterViewInit(){}//全部dom生成，建议在这里获取dom
+
+ ngOnDestroy() //组件销毁前调用
+
+14.获取dom和子组件传值给父组件（第一种）
+
+ 1.在核心模块引入 viewChide
+
+   import { Component, OnInit，ViewChiid} from '@angular/core';
+
+ 2.在需要获取dom的标签元素定义名字 #name
+
+ 3. @ViewChild(name) 变量:any;
+
+ 4.this.变量.nativeElement就可以操作dom
+ 
+ 5.this.变量.msg 可以获取子组件的数据
+
+15.父组件调用子组件的方法
+
+ 1.前面跟获取dom前3个步骤一样，不过定义标签元素名字是在组件上定义
+
+ 2.调用 this.变量.fn()
+
+16.父组件传值给子组件 既可以传值也可以传方法，传的方式不变 传this即把整个父组价传给子组件
+
+ 1.在父组件给子组件标签 [msg]='msg'
+
+ 2.在子组件中引入input模块
+
+   import { Component, OnInit，Input} from '@angular/core';
+
+ 3.接收父组件的值 @Input() msg:any
+
+17.子组件传值给父组件的第二种方法
+
+ 1.在子组件引入Output,EventEmitter
+ 
+   import { Component, OnInit，Output,EventEmitter} from '@angular/core';
+
+ 2.@Output() output:any=new EventEmitter()
+
+ 3.this.output.emit(data)
+
+ 4.父组件接收 （output）="output()"
+ 
+18.Rxjs 异步数据流编程
+
+ 1.引入 {Observable} from "rxjs"  ag自带不需要重新下载  
+
+ 2.let stream=new Observable(observer=>{setTimeout(()=>{observer.netx('返回的数据')},3000)}) //多次订阅把定时器改为计时器
+
+ 3.stream.subscribe((data)=>{}) //获取数据
+
+ 4.取消订阅 stream.subscribe((data)=>{}).unsubscribe();
+
+19.http请求
+
+ 1.在app.module 引入 import { HttpClientModule } from '@angular/common/http';
+
+ 2.imports 注入
+
+20.get请求
+
+ 1.在需要用到的组件引入 import { HttpClient } from '@angular/common/http';
+
+ 2.构造函数里面生明 constructor(public http:HttpClient){//使用this.http.get发起请求}
+ 
+ 3.this.http.get(api).subscribe((data)=>{})
+
+21.post请求
+
+ 1.在需要用到的组件引入 import { HttpClient，HttpHeaders } from '@angular/common/http';
+ 
+ 2.构造函数里面生明 constructor(public http:HttpClient){//使用this.http.post发起请求}
+
+ 3.post需要手动设置请求头 const httpOption={headers:new HttpHeaders({'content-type':'application/json'})}
+
+ 4.this.http.post(api,data,headers).subscribe((data)=>{})
+
+22.jsonp实现跨域
+
+  1.在app.module 引入 import { HttpClientModule，HttpClientJsonpModule } from '@angular/common/http';
+
+  2.imports 注入
+
+  3.在需要使用的组件引入 import { HttpClient } from '@angular/common/http';
+
+  4.2.构造函数里面生明 constructor(public http:HttpClient){//使用this.http.jsonp(api,'callback')发起请求}
+
+23.反向代理
+
+ 1.根目录新建proxy.conf.json
+
+ 2.{
+  "/api": {
+    "target": "http://o2o.dianjia51.com",
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/api": ""
+    }
+  }
+}
+
+ 2.在package.json 修改"scripts"下的"start"  "start": "ng serve --proxy-config proxy.conf.json",
+
+23.路由选中
+
+ 1.routerLinkActive="active"
+
+24.路由重定向
+
+ {path:'**',redirectTo:'/home'}
+
+25.选中路由
+
+ 给a链接添加属性 routerLinkActive='active'
+
+26.路由设置哈希值
+
+ 给a链接添加属性 [queryParams]='{id:1}'
+
+27.路由获取哈希值
+
+ 引入 {ActivatedRouter} from '@angulae/router'
+
+ 生明 public router:ActivatedRouter
+
+ this.router.queryParams.subscribe((data)=>{})
+
+28.动态路由
+
+ {path:'home/:id'}
+
+29.获取动态路由值
+
+  引入 {ActivatedRouter} from '@angulae/router'
+
+  生明 public router:ActivatedRouter
+
+  this.router.params.subscribe((data)=>{})
+
+30.js动态路由跳转
+
+ 
+  引入 {Router} from '@angulae/router'
+
+  生明 public router:Router
+
+  this.router.navigate(['/home'])
+
+31.js哈希值路由跳转
+
+  引入 {Router，NavigationExtras} from '@angulae/router' //NavigationExtras可引入可不引入
+
+  let queryParams:NavigationExtras={queryParams:{id:1},fragment:'anchor'}
+
+  this.router.navigate(['/home'],queryParams)
+
+32.父子路由
+
+ {path:'',children:[{path:''}]}
+
+33.自定义模块
+
+ ng g module name
+
+ 把自定义模块的组件暴露给跟模块
+
+ exports:[component]
+
+ 根模块引入在imports中生明
+
+34.模块路由懒加载
+ 
+ {path:''，loadChildren:'自定义模块路劲+#+自定义模块导出的名称'}
+ 
+ 

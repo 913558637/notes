@@ -1,0 +1,17 @@
+webpack主要分五个模块，分别是entry（入口），output（出口），plugins(插件)，loader和model（环境）运行npx webpack就可以打包
+
+如果要运行npm run dev 需要安装插件webpack-dev-serve 会自动打包编译和热更新
+
+html模板
+
+new htmlWebpackPlugin({
+    filename:`${k}.html`, //通过模板生成的文件名
+    template:`src/${k}.html`,//模板路径
+    inject:true, //是否自动在模板文件添加 自动生成的js文件链接
+    chunks:[k,'vendors','commons'],//根据chunks引入js和css文件
+    minify:{
+      removeComments:true, //是否压缩时 去除注释,
+      collapseWhitespace: true,
+      removeAttributeQuotes: true
+    }
+  });

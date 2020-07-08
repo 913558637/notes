@@ -1,0 +1,84 @@
+MYSQL语句规范
+
+  .关键字与函数名称全部大写
+
+  .数据库名称、表名称、字段名称全部小写
+
+  .SOL语句必须以分号结尾
+ 
+
+1.显示当前的版本号
+
+  SELECT VERSION();
+
+2.显示当前日期
+
+  SELECT NOW();
+
+3.显示当前用户
+
+  SELECT USER();
+
+ 4.创建数据库
+
+  CREATE { DATABASE | SCHEMA } [IF NOT EXISTS] name;
+   
+   加上这下面这一段就可以创建数据库时指定数据库的编码类型
+ 
+   CHARACTER SET charset_name(编码类型名称);
+
+5.查看数据库
+
+ SHOW DATABASES;
+
+6.查看某数据库编码方式
+
+ SHOW CREATE DATABASE name
+
+7.修改数据库的编码类型
+
+  ALTER DATABASE  db_name CHARACTER SET =charset_name
+
+8.删除数据库
+
+  DROP DATABASE name
+
+9.选择数据库
+
+  use db_name
+
+10.创建数据表
+
+   CREATE TABLE table_name(
+    id SMALLINT UNSIGNED  PRIMARY KEY (PRIMARY KEY 设置主键)
+   sex ENUM('1','2','3') DEFAULT('3') 默认值
+)
+
+11.查看数据列表
+
+ SHOW TABKES [FROM db_name] 
+
+12.查看数据表结构
+
+ SHOW COLUMNS FROM tb_name
+
+13.表插入记录
+
+ INSERT tb_name VALUES(内容)  必须为每个字段都添加内容
+ INSERT tb_name(字段名)  VALUES(内容)  动态的为字段添加内容
+
+14.记录查找
+
+  SELECT * FROM tb_name
+
+15.约束
+
+  NOT NULL （非空约束）
+
+  PRIMARY KEY （主键约束）
+
+  UNIQUE KEY （唯一约束）
+
+  DEFAULT（默认约束）
+
+  FOREIGN KEY（外键约束）
