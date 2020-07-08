@@ -1,0 +1,72 @@
+1.mvvm
+   m是model，处理相关数据，v是view，展示的视图，vm是viewModel，负责把view和model关联起来
+2.vue中双向数据绑定原理
+   数据劫持结合发布者订阅者的方式，通过Object.definpropty劫持属性的get和set，数据变动的时候发布者通知订阅者，
+   做出相应的处理
+3.cookie、SessionStorage和localStorage的区别
+   共同点：都是本地存储数据
+   不同点：cookie会在同源的http请求中携带，sessionStorage和localStorage不会；
+	cookie存储不能超过4K，sessionStorage和localStorage可以达到5M
+	cookie在设置的时间内有效
+	sessionStorage在当前浏览器窗口关闭之前有效
+	localStorage一直有效，即使关闭浏览器或窗口
+4.加法浮点数问题 
+   有n位小数就乘以10的n次方，算完再除以10的n次方
+5.移动端调用相机
+   input 设置capture="camera"
+
+6.语义化标签 
+   header asider section nav footer main canvas video audio
+7.vuex的理解
+   vuex是一个专为vue应用 一个状态管理工具，有5个属性，分别是state，getter，mutation，action，module
+   state存储数据，getter是计算属性，mutation和action是事件，mutation必须是同步，action可以包含异步，
+   mutation使用commit触发，action使用dispatch触发
+8.Josn和josnp的区别
+   JSON是一种数据格式，而JSONP是一种跨域方式。
+   Jsonp的实现原理是通过动态创建script标签，通过回调函数返回数据
+9.px,em,rem的区别
+  px是固定的相素
+  em是根据其父元素的字体大小来设置 如父元素是16px,那么1em=16px
+  rem是根据根元素Html来设置的 如根元素是16px,那么1rem=16px
+10.<keep-alive></keep-alive>的作用
+   keep-alive是vue提供的用来对组件进行缓存的组件，它有两个钩子，activated和deactivated，
+   第一次进来生命周期顺序是created>mounted>activated,第二次以后进来只会触发activated
+11.父组件与子组件之间的通讯方式
+     父组件获取子组件数据的方法$refs,$children,$emit 
+     子组件获取父组件数据的方法props,$parent,$attrs
+12.vue中的生命周期的钩子函数并说一下作用
+    beforeCreated:初始化，属性和事件没绑定
+    created：属性和事件已经绑定，可以使用this
+    beforeMounted：虚拟dom已经生成，但还没挂载在don节点
+    mounted：dom已经生成，可以操作dom
+    beforeUpData：数据已经发生变化，但是还视图还没有更新
+    upData：数据发生变化并视图已经新
+    beforeDestroy：即将解除绑定，销毁子组件以及事件监听
+    destroy：组件完全销毁
+13.用es6的方法将数组【5，6，7】插入【1，2，3，4】中生成数组【1，2，5，6，7，3，4】
+     【1，2，3，4】.splice(2,0,...【5，6，7】)
+14.Vue组件里的data为什么是函数
+     data是创建在vue的原型链上的，如果data是对象组件的data永远都是指向同一个地址，会出现组件共享data问题
+15.父组件传给子组件的值子组件能改吗？为什么？
+    不能，prop是单向数据流，父组件值的更新会传递到子组件，，反过来不行，防止子组件改变父组件的状态
+16.Vue的hash路由和history路由的区别
+     history路由url更美观，但是history路由还需要服务器的配合，不然页面会报404
+17.vue的sync通配符
+    prop是单向数据流，sync可以实现类似双向数据流的功能，sync只是一个语法糖 主要还是靠updata:属性名来实现
+18.axios 默认的请求头
+     application/json;charset=utf-8
+19.watch和computed区别
+     都是根据数据变化做出相应的变化，watch是一个结果影响多个变化，computer是多个变化影响一个结果
+20.vue开发遇到过的问题
+    1.离开当前组件计时器没有销毁，离开组件时手动销毁
+    2.vue打包资源出现路径不对问题，修改assetsPublicPath为相对路径
+    3.data定义的对象新增属性视图没有自动更新 ，使用$setAPI
+    4.使用本地图片静态资源不生效，使用require导入
+21.项目管理工具
+    tapd 
+    swagger接口文档
+    jenkins自动化打包
+22.ios 和 安卓 兼容问题
+  iframe在ios会被放大，需要width设置为1px，max-width为100%；
+  固定定位里面input Ios无法聚焦问题，原因是收起键盘时窗口滑动没有自动恢复为0；
+  css设置overflow：auto,有些手机会出现滚动条，解决办法是包裹一层标签overflow设置为hidde，里面的标签高度设置比外层标签大一点，利用外层标签裁剪掉滚动条
