@@ -223,3 +223,44 @@ index是当前元素下标，tindex是拖动到的位置下标。
            image.src = evt.target.result
          }
         reader.readAsDataURL(file)
+//文件切片上传
+function AjaxFile(file, i) {
+                if (file != null) {
+                    let name = file.name, //文件名
+                        size = file.size, //总大小shardSize = 2 * 1024 * 1024,
+                        shardSize = 2 * 1024 * 1024,//以2MB为一个分片
+                        shardCount = Math.ceil(size / shardSize); //总片数
+                    console.log(shardCount,'总数',i);
+                    if (i >= shardCount) {
+                        return;
+                    }
+                    //计算每一片的起始与结束位置
+                    let start = i * shardSize,
+                        end = Math.min(size, start + shardSize);
+                    this.$upload(
+                        'Upload/UploadAttachments',
+                        {
+                            file:file.slice(start, end),
+                        },
+                        {
+                            params:{
+                                totalSize:file.size,
+                                fileName:name,
+                                tempDirectory:file.lastModified,
+                                total:shardCount,
+                                index:i + 1,
+                            }
+                        }
+                    )
+                        .then(({data})=>{
+                            console.log(data);
+                            i = data.data.number;
+                            if (data.data.mergeOk) {
+                                this.$emit('fileAccept',data.data.filePath)
+                                this.Loading.close()
+                            }else{
+                                this.AjaxFile(file, i);
+                            }
+                        });
+                }
+            }

@@ -70,3 +70,4 @@
   iframe在ios会被放大，需要width设置为1px，max-width为100%；
   固定定位里面input Ios无法聚焦问题，原因是收起键盘时窗口滑动没有自动恢复为0；
   css设置overflow：auto,有些手机会出现滚动条，解决办法是包裹一层标签overflow设置为hidde，里面的标签高度设置比外层标签大一点，利用外层标签裁剪掉滚动条
+  input的光标ios会随行高变大变小，安卓不会
