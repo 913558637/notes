@@ -119,11 +119,8 @@ import {Suspense, lazy} from 'react';
 import routers from '../../routers/index'
 
 <Router>
-          <div>
-              <div>
-                  <Link to="/">Home</Link>
-                  <Link to="/List">List</Link>
-              </div>
+         
+              
               <Suspense fallback={<div>loading...</div>}>
                   <Switch>
                       {
@@ -133,6 +130,6 @@ import routers from '../../routers/index'
                       }
                   </Switch>
               </Suspense>
-          </div>
+         
       </Router>
 
