@@ -1,8 +1,7 @@
 1.mvvm
    m是model，处理相关数据，v是view，展示的视图，vm是viewModel，负责把view和model关联起来
 2.vue中双向数据绑定原理
-   数据劫持结合发布者订阅者的方式，通过Object.definpropty劫持属性的get和set，数据变动的时候发布者通知订阅者，
-   做出相应的处理
+   数据劫持结合发布者订阅者的方式，通过Object.definpropty劫持属性，给每个属性设置get和set，在get放置订阅者方法，在set放置发布者方法，数据更改时候触发发布者方法，发布者方法会通知订阅者数据变动了，然后触发监视者方法更新数据和视图
 3.cookie、SessionStorage和localStorage的区别
    共同点：都是本地存储数据
    不同点：cookie会在同源的http请求中携带，sessionStorage和localStorage不会；
@@ -35,8 +34,8 @@
      父组件获取子组件数据的方法$refs,$children,$emit 
      子组件获取父组件数据的方法props,$parent,$attrs
 12.vue中的生命周期的钩子函数并说一下作用
-    beforeCreated:初始化，属性和事件没绑定
-    created：属性和事件已经绑定，可以使用this
+    beforeCreated:初始化，属性和事件没绑定vue实例
+    created：属性和事件已经绑定vue实例，可以使用this
     beforeMounted：虚拟dom已经生成，但还没挂载在don节点
     mounted：dom已经生成，可以操作dom
     beforeUpData：数据已经发生变化，但是还视图还没有更新

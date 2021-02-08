@@ -132,18 +132,27 @@ function fox_tap(element,callBack) {
 
 //时间戳转换
 
-Vue.filter('xtime', function (value) {
-  let time = new Date(value*1000);
-  let y = time.getFullYear();//年
-  let m = (time.getMonth()+1<10)?'0'+(time.getMonth()+1):time.getMonth()+1;//月
-  let d = time.getDate()<10?'0'+time.getDate():time.getDate();//日
-  let h = time.getHours()<10?'0'+time.getHours():time.getHours();//时
-  let f = time.getMinutes()<10?'0'+time.getMinutes():time.getMinutes();//分
-  let s = time.getSeconds()<10?'0'+time.getSeconds():time.getSeconds();//秒
-  // value = `${y}-${m}-${d} ${h}:${f}:${s}`
-  value = `${y}-${m}-${d}`
-  return value;
-});
+const FormatTime = (time, fmt = 'YYYY/MM/DD hh:mm:ss') => {
+  if (!time) return ''
+  let date = new Date(time - 0)
+  if (/(Y+)/.test(fmt)) {
+    fmt = fmt.replace(RegExp.$1, date.getFullYear() + '').substr(4 - RegExp.$1.length)
+  }
+  let o = {
+    'M+': date.getMonth() + 1,
+    'D+': date.getDate(),
+    'h+': date.getHours(),
+    'm+': date.getMinutes(),
+    's+': date.getSeconds()
+  }
+  for (let key in o) {
+    if (new RegExp(`(${key})`).test(fmt)) {
+      let str = o[key] + ''
+      fmt = fmt.replace(RegExp.$1, (RegExp.$1.length === 1) ? str : ('00' + str).substr(str.length))
+    }
+  }
+  return fmt
+}
 
 //上传图片
 uploadChange(event){
@@ -256,8 +265,8 @@ function AjaxFile(file, i) {
                             console.log(data);
                             i = data.data.number;
                             if (data.data.mergeOk) {
-                                this.$emit('fileAccept',data.data.filePath)
-                                this.Loading.close()
+                                
+                                
                             }else{
                                 this.AjaxFile(file, i);
                             }

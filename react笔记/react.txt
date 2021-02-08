@@ -103,3 +103,36 @@ componentWillUnmount(){//组件销毁前执行}
 18.路由传值
 
  看官网的 Router Config
+
+19.路由懒加载Suspense和lazy
+
+
+App.js
+
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route,
+    Link
+} from "react-router-dom";
+import {Suspense, lazy} from 'react';
+import routers from '../../routers/index'
+
+<Router>
+          <div>
+              <div>
+                  <Link to="/">Home</Link>
+                  <Link to="/List">List</Link>
+              </div>
+              <Suspense fallback={<div>loading...</div>}>
+                  <Switch>
+                      {
+                          routers.map((item,index) => {
+                              return <Route key={index} exact = {item.exact} path={item.path} component={lazy(item.component)}></Route>
+                          })
+                      }
+                  </Switch>
+              </Suspense>
+          </div>
+      </Router>
+
