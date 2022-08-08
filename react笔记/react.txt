@@ -68,7 +68,7 @@
  
 13.生命周期
 
- componentWillUnmount() {// 组件即将挂载
+ componentWillmount() {// 组件即将挂载
        
     }
  componentDidMount(){// 组件挂载完成

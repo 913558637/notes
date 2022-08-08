@@ -15,7 +15,7 @@
    input 设置capture="camera"
 
 6.语义化标签 
-   header asider section nav footer main canvas video audio
+   header assured section nav footer main canvas video audio
 7.vuex的理解
    vuex是一个专为vue应用 一个状态管理工具，有5个属性，分别是state，getter，mutation，action，module
    state存储数据，getter是计算属性，mutation和action是事件，mutation必须是同步，action可以包含异步，
@@ -70,3 +70,19 @@
   固定定位里面input Ios无法聚焦问题，原因是收起键盘时窗口滑动没有自动恢复为0；
   css设置overflow：auto,有些手机会出现滚动条，解决办法是包裹一层标签overflow设置为hidde，里面的标签高度设置比外层标签大一点，利用外层标签裁剪掉滚动条
   input的光标ios会随行高变大变小，安卓不会
+
+23.小程序swiper组件display-multiple-items属性设置小数报错问题
+   如果需要滑块显示不是整数，可以设置前后边距来达到目的
+
+24.小程序没有new FormData()
+
+25:transform与position:fixed 
+父组件设置transform，子组件设置固定地位会变相对定位	
+
+26.闭包
+
+函数执行后返回一个内部函数，如果内部函数持有被执行函数作用域的变量，即形成了闭包。
+
+
+
+ 
